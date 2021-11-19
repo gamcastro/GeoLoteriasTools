@@ -21,6 +21,7 @@ Get-ApostaMegaSena -numeros 10
 #>
 [cmdletBinding()]
 param(
+    [ValidateRange(6,10)]
     [int]$numeros=6
 )
 BEGIN{}
