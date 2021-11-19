@@ -34,10 +34,13 @@ PROCESS{
             $conjunto += Get-Random -Minimum 1 -Maximum 60
         }
         $conjunto = $conjunto | Sort-Object | Get-Unique
-        $s = $props.Count
+        $s = $conjunto.Count
        
     }
-    $props = @{'Aposta' = $conjunto}
+    $guid = New-Guid
+    $props = @{'Aposta' = $conjunto
+               'Identificador' = $guid.Guid
+                'Data' = Get-Date}
     $obj = New-Object -TypeName psobject -Property $props
     Write-Output $obj
 }
