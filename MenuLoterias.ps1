@@ -1,13 +1,16 @@
+﻿function Invoke-Menu{
+    [cmdletbinding()]
+    Param()
 
-Clear-Host
+    Clear-Host
 
-$title = "Geo Loterias"
-$menuwidth = 30
-[int]$pad = ($menuwidth/2)+($title.length/2)
+   $title = "Geo Loterias"
 
-$menu = @"
+   $menuwidth = 30
+   [int]$pad = ($menuwidth/2)+($title.length/2)
+   $menu = @"
 
-          Opções
+   Opções
 ------------------------------
 1. MegaSena
 2. Lotofacil
@@ -20,3 +23,25 @@ selecione uma opcao do menu
 
 Write-Host ($title.PadLeft($pad)) -ForegroundColor Cyan
 Write-Host $menu -ForegroundColor Yellow
+
+[int]$r=Read-Host "Selecione uma opcao do menu"
+
+if((1..5) -notcontains $r){
+    Write-Warning "$r nao e uma opcao valida"
+    pause
+    Invoke-Menu
+}
+
+switch ($r) {
+    1 {  }
+    2 {}
+    3{}
+    5 {
+        Clear-Host
+        Write-Host "Obrigado" -ForegroundColor Green
+        Return
+    }
+}
+}
+Invoke-Menu
+
