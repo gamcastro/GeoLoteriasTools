@@ -47,3 +47,22 @@ PROCESS{
 }
 END{}
 }
+
+function Get-ApostaLotofacil{
+    <#
+    .SYNOPSIS
+
+    .DESCRIPTION
+
+    .PARAMETER
+
+    .EXAMPLE
+    Get-ApostaLotofacil
+    Gera uma aposta padrao da lotofacil com 15 números
+
+    .EXAMPLE
+    Get-ApostaLotofacil -numeros 20
+    Gera uma aposta da lotofacil com 20 números
+
+    #>
+}

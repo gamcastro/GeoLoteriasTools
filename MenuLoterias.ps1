@@ -1,6 +1,7 @@
 ﻿function Invoke-Menu{
     
     Clear-Host
+    $host.UI.RawUI.WindowTitle = "GEO LOTERIAS"
 
    $title = "Geo Loterias"
 
