@@ -91,3 +91,52 @@ function Get-ApostaLotofacil{
     }
     END{}
 }
+
+function Get-ApostaQuina{
+    <#
+    .SYNOPSIS
+    Ferramenta para gerar aposta automática da loteria QUINA.
+
+    .DESCRIPTION
+    Ferramenta para gerar aposta automática da loteria QUINA.A aposta deverá conter no mínimo 5 e no máximo 10.
+
+    .PARAMETER numeros
+    Quantidade de números que a aposta conterá.
+
+    .EXAMPLE
+    Get-ApostaQuina
+    Gera uma aposta padrão da QUINA com 5 números.
+
+    .EXAMPLE
+    Get-ApostaQuina -numeros 15
+    Gera uma aposta da Quina com 15 números.
+    #>
+    [Cmdletbinding()]
+    Param(
+        [ValidateRange(5,15)]
+        [int]$numeros=5
+    )
+    BEGIN{
+        $s = 0
+        [int[]] $conjunto = @()
+    }
+    PROCESS{
+        while ($conjunto.Count -lt $numeros)
+    {
+        for ($i=0;$i -lt ($numeros -$s);$i++)
+        {
+            $conjunto += Get-Random -Minimum 1 -Maximum 80
+        }
+        $conjunto = $conjunto | Sort-Object | Get-Unique
+        $s = $conjunto.Count
+       
+    }
+    $guid = New-Guid
+    $props = @{'Aposta' = $conjunto
+               'Identificador' = $guid.Guid
+                'Data' = Get-Date}
+    $obj = New-Object -TypeName psobject -Property $props
+    Write-Output $obj 
+    }
+    END{}
+}
