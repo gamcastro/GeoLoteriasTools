@@ -7,16 +7,12 @@ Ferramenta para gerar aposta da loteria megasena. A aposta poderá ter no mínim
 .PARAMETER numeros
 Quantidade de números que aposta conterá 
 .EXAMPLE
-Gera uma aposta padrao com 6 numeros
 Get-ApostaMegaSena
-
-02 04 08 12 34 56 60
+Gera uma aposta padrao com 6 numeros
 
 .EXAMPLE
-Gera uma aposta com 10 numeros
 Get-ApostaMegaSena -numeros 10
-
-01 08 09 12 15 20 24 29 34 55
+Gera uma aposta com 10 numeros
 
 #>
 [cmdletBinding()]
@@ -51,10 +47,11 @@ END{}
 function Get-ApostaLotofacil{
     <#
     .SYNOPSIS
-
+    Ferramenta para gerar aposta da loteria lotofácil
     .DESCRIPTION
-
-    .PARAMETER
+    Ferramenta para gerar apostas da loteria lotofácil.A(s) aposta(s) deverá conter no mímimo 15 e no máximo 20 números
+    .PARAMETER numeros
+    Quantidade de números que a aposta conterá
 
     .EXAMPLE
     Get-ApostaLotofacil
@@ -65,4 +62,32 @@ function Get-ApostaLotofacil{
     Gera uma aposta da lotofacil com 20 números
 
     #>
+    [Cmdletbinding()]
+    Param(
+        [ValidateRange(15,20)]
+        [int]$numeros=15
+    )
+    BEGIN{
+        $s = 0
+        [int[]] $conjunto = @()
+    }
+    PROCESS{
+        while ($conjunto.Count -lt $numeros)
+    {
+        for ($i=0;$i -lt ($numeros -$s);$i++)
+        {
+            $conjunto += Get-Random -Minimum 1 -Maximum 25
+        }
+        $conjunto = $conjunto | Sort-Object | Get-Unique
+        $s = $conjunto.Count
+       
+    }
+    $guid = New-Guid
+    $props = @{'Aposta' = $conjunto
+               'Identificador' = $guid.Guid
+                'Data' = Get-Date}
+    $obj = New-Object -TypeName psobject -Property $props
+    Write-Output $obj 
+    }
+    END{}
 }
