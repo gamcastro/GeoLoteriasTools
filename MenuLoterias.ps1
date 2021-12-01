@@ -1,5 +1,7 @@
 ﻿function Invoke-Menu{
     Import-Module GeoHomeTools
+    Set-ConsoleFont "Lucida Console" -Size 20
+    Start-Sleep -Seconds 2
     Resize-Console -Maximize
     Clear-Host
   
@@ -7,7 +9,7 @@
 
    $title = "Geo Loterias"
 
-   $menuwidth = 103
+   $menuwidth = (Get-ConsoleSize).Width
    [int]$pad = ($menuwidth/2)+($title.length/2)
    $menu = @"
 
@@ -21,12 +23,22 @@
 selecione uma opcao do menu
 
 "@
-$dataAtual = (Get-Date).ToString()
-Write-Host "======================================================================================================="
-Write-Host ($title.PadLeft($pad) + $dataAtual.PadLeft(40)) -ForegroundColor Yellow
-Write-Host "======================================================================================================="
-Write-Host $menu -ForegroundColor Yellow
 
+Write-Verbose "Construindo o Cabeçalho."
+$dataAtual = (Get-Date).ToString()
+for ($i=0;$i -lt $menuwidth;$i++){
+    Write-Host "=" -NoNewline
+}
+
+Write-Host ($title.PadLeft($pad) + $dataAtual.PadLeft(50)) -ForegroundColor Yellow
+for ($i=0;$i -lt $menuwidth;$i++){
+    Write-Host "=" -NoNewline
+}
+
+
+Write-Verbose "Construindo o Menu de opçoes ."
+Write-Host ""
+Write-Host $menu -ForegroundColor Yellow
 [int]$r=Read-Host "Selecione uma opcao do menu"
 
 if((1..5) -notcontains $r){
@@ -35,6 +47,7 @@ if((1..5) -notcontains $r){
     Invoke-Menu
 }
 
+Write-Verbose "Selecionando a opção"
 switch ($r) {
     1 { Start-Process powershell -ArgumentList ("-ExecutionPolicy ByPass " + $showWindowMegaSena) -Wait }
     2 {Start-Process powershell -ArgumentList ("-ExecutionPolicy ByPass " + $showWindowLotofacil) -Wait}
@@ -48,12 +61,18 @@ switch ($r) {
 }
 
 $showWindowMegaSena = {
+    Import-Module GeoHomeTools
+    Set-ConsoleFont -Name 'Lucida Console' -Size 20
+    Start-Sleep -Seconds 1
+    Resize-Console -Width 80 -Height 20
+    Start-Sleep -Seconds 1
+    Set-WindowPosition
     Clear-Host
-    Write-Host '==================== MegaSena ===================' -ForegroundColor Green
+    Write-Host '=================================== MegaSena ===================================' -ForegroundColor Green
     Write-Host ''
     Write-Host ''
-    [int]$numeros = Read-Host 'Digite a quantidade de números da aposta (6 até 10)'
-    [int]$jogos = Read-Host "Digite a quantidade de jogos (1 até 10)"
+    [int]$numeros = Read-Host "Digite a quantidade de números da aposta `(6 até 10`)"
+    [int]$jogos = Read-Host "Digite a quantidade de jogos `(1 até 10`)"
     Write-Host ''
     Write-Host ''
 
@@ -128,6 +147,18 @@ for ($i = 0;$i -lt $jogos;$i++){
 Write-Host ''
 Write-Host ''
 Pause
+}
+
+function Set-WindowPosition{
+    Add-Type -Name Window -Namespace Console -MemberDefinition @'
+[DllImport("Kernel32.dll")] 
+public static extern IntPtr GetConsoleWindow();
+[DllImport("user32.dll")]
+public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int W, int H); 
+'@
+$consoleHWND = [Console.Window]::GetConsoleWindow();
+Start-Sleep -Seconds 1
+[Console.Window]::MoveWindow($consoleHWND,0,0,500,400);
 }
 Invoke-Menu
 
