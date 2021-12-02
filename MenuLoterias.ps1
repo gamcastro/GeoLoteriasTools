@@ -75,8 +75,16 @@ $showWindowMegaSena = {
     Write-Host '=================================== MegaSena ===================================' -ForegroundColor Green
     Write-Host ''
     Write-Host ''
-    [int]$numeros = Read-Host "Digite a quantidade de números da aposta `(6 até 10`)"
-    [int]$jogos = Read-Host "Digite a quantidade de jogos `(1 até 10`)"
+    
+        [int]$numeros = Read-Host "Digite a quantidade de números da aposta `(6 até 10`)"
+        [int]$jogos = Read-Host "Digite a quantidade de jogos `(1 até 10`)"
+    
+        if (((6..10) -notcontains $numeros) -or (1..10) -notcontains $jogos){
+            Write-Host 'Opcao invalida'
+            Pause
+            Return
+        }
+    
     Write-Host ''
     Write-Host ''
 
