@@ -36,6 +36,7 @@ for ($i=0;$i -lt $menuwidth;$i++){
 }
 
 
+
 Write-Verbose "Construindo o Menu de opçoes ."
 Write-Host ""
 Write-Host $menu -ForegroundColor Yellow
@@ -64,9 +65,10 @@ $showWindowMegaSena = {
     Import-Module GeoHomeTools
     Set-ConsoleFont -Name 'Lucida Console' -Size 20
     Start-Sleep -Seconds 1
+    Set-WindowPosition
+    Start-Sleep -Seconds 1 | Out-Null
     Resize-Console -Width 80 -Height 20
     Start-Sleep -Seconds 1
-    Set-WindowPosition
     Clear-Host
     Write-Host '=================================== MegaSena ===================================' -ForegroundColor Green
     Write-Host ''
@@ -149,16 +151,5 @@ Write-Host ''
 Pause
 }
 
-function Set-WindowPosition{
-    Add-Type -Name Window -Namespace Console -MemberDefinition @'
-[DllImport("Kernel32.dll")] 
-public static extern IntPtr GetConsoleWindow();
-[DllImport("user32.dll")]
-public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int W, int H); 
-'@
-$consoleHWND = [Console.Window]::GetConsoleWindow();
-Start-Sleep -Seconds 1
-[Console.Window]::MoveWindow($consoleHWND,0,0,500,400);
-}
 Invoke-Menu
 
