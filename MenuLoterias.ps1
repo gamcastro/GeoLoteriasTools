@@ -65,7 +65,7 @@ $showWindowMegaSena = {
     Import-Module GeoHomeTools
     Set-ConsoleFont -Name 'Lucida Console' -Size 20
     Start-Sleep -Seconds 1
-    Set-WindowPosition
+    Set-WindowPosition -X 200 -Y 200 -Width 600 -Height 400
     Start-Sleep -Seconds 1 | Out-Null
     Resize-Console -Width 80 -Height 20
     Start-Sleep -Seconds 1
