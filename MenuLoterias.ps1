@@ -1,4 +1,39 @@
-﻿function Invoke-Menu{
+﻿
+<#PSScriptInfo
+
+.VERSION 0.0.1
+
+.GUID bde81e27-5114-40f0-a3a7-604eff72ae1b
+
+.AUTHOR George Castro
+
+.COMPANYNAME 
+
+.COPYRIGHT 
+
+.TAGS 
+
+.LICENSEURI 
+
+.PROJECTURI 
+
+.ICONURI 
+
+.EXTERNALMODULEDEPENDENCIES 
+
+.REQUIREDSCRIPTS 
+
+.EXTERNALSCRIPTDEPENDENCIES 
+
+.RELEASENOTES
+
+.DESCRIPTION 
+ Menu de opcoes do GeoLoterias 
+
+#>
+
+
+function Invoke-Menu{
     Import-Module GeoHomeTools
     Set-ConsoleFont "Lucida Console" -Size 20
     Resize-Console -Maximize
@@ -19,7 +54,6 @@
 3. Quina
 5. Sair
 
-selecione uma opcao do menu
 
 "@
 
@@ -191,4 +225,5 @@ $showWindowQuina = {
 }.GetNewClosure()
 
 Invoke-Menu
+
 
