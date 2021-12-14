@@ -1,4 +1,39 @@
-﻿function Invoke-Menu{
+﻿
+<#PSScriptInfo
+
+.VERSION 0.0.1
+
+.GUID bde81e27-5114-40f0-a3a7-604eff72ae1b
+
+.AUTHOR George Castro
+
+.COMPANYNAME 
+
+.COPYRIGHT 
+
+.TAGS 
+
+.LICENSEURI 
+
+.PROJECTURI 
+
+.ICONURI 
+
+.EXTERNALMODULEDEPENDENCIES 
+
+.REQUIREDSCRIPTS 
+
+.EXTERNALSCRIPTDEPENDENCIES 
+
+.RELEASENOTES
+
+.DESCRIPTION 
+ Menu de opcoes do GeoLoterias 
+
+#>
+
+
+function Invoke-Menu{
     Import-Module GeoHomeTools
     Set-ConsoleFont "Lucida Console" -Size 20
     Resize-Console -Maximize
@@ -19,7 +54,6 @@
 3. Quina
 5. Sair
 
-selecione uma opcao do menu
 
 "@
 
@@ -75,8 +109,16 @@ $showWindowMegaSena = {
     Write-Host '=================================== MegaSena ===================================' -ForegroundColor Green
     Write-Host ''
     Write-Host ''
-    [int]$numeros = Read-Host "Digite a quantidade de números da aposta `(6 até 10`)"
-    [int]$jogos = Read-Host "Digite a quantidade de jogos `(1 até 10`)"
+    
+        [int]$numeros = Read-Host "Digite a quantidade de números da aposta `(6 até 10`)"
+        [int]$jogos = Read-Host "Digite a quantidade de jogos `(1 até 10`)"
+    
+        if (((6..10) -notcontains $numeros) -or (1..10) -notcontains $jogos){
+            Write-Host 'Opcao invalida'
+            Pause
+            Return
+        }
+    
     Write-Host ''
     Write-Host ''
 
@@ -183,4 +225,5 @@ $showWindowQuina = {
 }.GetNewClosure()
 
 Invoke-Menu
+
 

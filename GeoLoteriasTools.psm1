@@ -1,4 +1,4 @@
-function Get-ApostaMegaSena{
+﻿function Get-ApostaMegaSena{
 <#
 .SYNOPSIS
 Gera aposta automática da loteria megasena.
