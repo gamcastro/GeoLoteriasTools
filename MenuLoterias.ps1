@@ -84,9 +84,9 @@ if((1..5) -notcontains $r){
 
 Write-Verbose "Selecionando a opção"
 switch ($r) {
-    1 { Start-Process powershell -Wait -ArgumentList ("-ExecutionPolicy ByPass " + $showWindowMegaSena)  }
-    2 {Start-Process powershell -Wait -ArgumentList ("-ExecutionPolicy ByPass " + $showWindowLotofacil) }
-    3{Start-Process powershell  -Wait -ArgumentList ("-ExecutionPolicy ByPass " + $showWindowQuina) }
+    1 { Start-Process pwsh -Wait -ArgumentList ("-ExecutionPolicy ByPass -Command" + $showWindowMegaSena)  }
+    L {Start-Process pwsh -Wait -ArgumentList ("-ExecutionPolicy ByPass -Command" + $showWindowLotofacil) }
+    3{Start-Process pwsh  -Wait -ArgumentList ("-ExecutionPolicy ByPass -Command" + $showWindowQuina) }
     5 {
         Clear-Host
         Write-Host "Obrigado" -ForegroundColor Green
@@ -97,6 +97,7 @@ switch ($r) {
 
 $showWindowMegaSena = {
     Import-Module GeoHomeTools
+    Import-Module WindowsConsoleFonts
 
     Set-ConsoleFont -Name 'Lucida Console' -Size 20   
 
@@ -106,7 +107,7 @@ $showWindowMegaSena = {
     Resize-Console -Width 70 -Height 25
     
     Clear-Host
-    Write-Host '================================ MegaSena ================================' -ForegroundColor Green
+    Write-Host '============================== MegaSena =============================' -ForegroundColor Green
     Write-Host ''
     Write-Host ''
     
