@@ -84,9 +84,9 @@ if((1..5) -notcontains $r){
 
 Write-Verbose "Selecionando a opção"
 switch ($r) {
-    1 { Start-Process powershell -Wait -ArgumentList ("-ExecutionPolicy ByPass " + $showWindowMegaSena)  }
-    2 {Start-Process powershell -Wait -ArgumentList ("-ExecutionPolicy ByPass " + $showWindowLotofacil) }
-    3{Start-Process powershell  -Wait -ArgumentList ("-ExecutionPolicy ByPass " + $showWindowQuina) }
+    1 { Start-Process pwsh -Wait -ArgumentList ("-ExecutionPolicy ByPass -Command" + $showWindowMegaSena)  }
+    L {Start-Process pwsh -Wait -ArgumentList ("-ExecutionPolicy ByPass -Command" + $showWindowLotofacil) }
+    3{Start-Process pwsh  -Wait -ArgumentList ("-ExecutionPolicy ByPass -Command" + $showWindowQuina) }
     5 {
         Clear-Host
         Write-Host "Obrigado" -ForegroundColor Green
@@ -97,16 +97,17 @@ switch ($r) {
 
 $showWindowMegaSena = {
     Import-Module GeoHomeTools
+    Import-Module WindowsConsoleFonts
 
     Set-ConsoleFont -Name 'Lucida Console' -Size 20   
 
-    Set-WindowPosition -X 200 -Y 200 -Width 600 -Height 400 | Out-Null  
+    Set-WindowPosition -X 500 -Y 100 -Width 600 -Height 400 | Out-Null  
     $host.UI.RawUI.WindowTitle = 'MegaSena'
     
-    Resize-Console -Width 80 -Height 20
+    Resize-Console -Width 70 -Height 25
     
     Clear-Host
-    Write-Host '=================================== MegaSena ===================================' -ForegroundColor Green
+    Write-Host '============================== MegaSena =============================' -ForegroundColor Green
     Write-Host ''
     Write-Host ''
     
@@ -148,13 +149,13 @@ $showWindowLotofacil = {
 
     Set-ConsoleFont -Name 'Lucida Console' -Size 20   
 
-    Set-WindowPosition -X 100 -Y 200 -Width 600 -Height 400 | Out-Null  
+    Set-WindowPosition -X 500 -Y 100 -Width 400 -Height 300 | Out-Null  
     $host.UI.RawUI.WindowTitle = 'LotoFacil'
     
-    Resize-Console -Width 100 -Height 20
+    Resize-Console -Width 70 -Height 25
     
     Clear-Host
-    Write-Host '============================================ LotoFacil ============================================' -ForegroundColor Green
+    Write-Host '============================= LotoFacil =============================' -ForegroundColor Green
     Write-Host ''
     Write-Host ''
     [int]$numeros = Read-Host "Digite a quantidade de números da aposta `(15 até 20`)"
@@ -171,7 +172,7 @@ $showWindowLotofacil = {
     for ($i = 0;$i -lt $jogos;$i++){
        
         $aposta = Get-ApostaLotofacil -numero $numeros |Select-Object -Property Aposta
-        Write-Host "Aposta ($i + 1) : `t" -NoNewline
+        Write-Host "Aposta ($i + 1):' '" -NoNewline
         foreach ($item in $aposta.Aposta) {           
             [string]$formatedItem = '{0:D2}' -f $item
             Write-Host "$formatedItem ' ' "   -NoNewline
